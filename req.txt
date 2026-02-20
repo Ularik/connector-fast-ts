@@ -1,0 +1,6 @@
+asyncpg
+sqlalchemy
+fastapi[standard]
+authx
+uvicorn
+psycopg2-binary
