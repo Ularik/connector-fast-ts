@@ -13,12 +13,15 @@ app = FastAPI()
 app.include_router(ts_router, tags=["cars"])
 app.include_router(vs_router, tags=["Права"])
 
+
 @app.exception_handler(TimeoutError)
 async def db_operational_error_handler(request: Request, exc: TimeoutError):
     return JSONResponse(
         status_code=503,
         content={"message": "База данных временно недоступна. Попробуйте позже."},
     )
+
+
 
 
 

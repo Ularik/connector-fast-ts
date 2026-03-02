@@ -1,9 +1,9 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
-import os
+from src.config import settings
 
-URL_TS = "postgresql+asyncpg://ts_gknb1otdel:TeghSheSffS25GSg3ATEwDsS@10.33.101.4:5432/dbts"
-URL_VS = "postgresql+asyncpg://rvs_gknb1otdel:TnEfSTghveHhwegSTge24Hs@10.33.101.6:5432/DBVS"
+URL_TS = settings.URL_TS
+URL_VS = settings.URL_VS
 
 async_engine_ts = create_async_engine(URL_TS, pool_pre_ping=True,
             pool_recycle=1800,
