@@ -1,5 +1,5 @@
 from src.database import AsyncSessionVS
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from src.schemas.payload import Payload
 from sqlalchemy.orm import selectinload, joinedload, with_loader_criteria
 from sqlalchemy import select
@@ -10,7 +10,17 @@ router = APIRouter()
 
 
 @router.post("/get-driver-doc")
-async def get_driver_doc(payload: Payload):
+async def get_driver_doc(payload: Payload = Body(openapi_examples={
+    "1": {
+        "summary": "base example",
+        "description": "base example",
+        "value": {
+            "subject": { "pin": "21710198200951" },
+            "requested_groups": ["person_driver_doc"],
+            "paging": { "limit": 10, "offset": 0 }
+        }
+    }
+})):
     """
     { "subject": { "pin": "21710198200951" }, "requested_groups": ["person_driver_doc"], "paging": { "limit": 10, "offset": 0 } }
     """
@@ -43,4 +53,5 @@ async def get_driver_doc(payload: Payload):
                 data["statements"][state.id]["cards"] = [CardsSchema.model_validate(card)]
             elif state.id in data:
                 data["statements"][state.id]["cards"].append(CardsSchema.model_validate(card))
-        return data
+
+        return [data]

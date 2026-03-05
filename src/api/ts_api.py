@@ -61,10 +61,11 @@ async def get_car(payload: GetCarsSchema = Body(openapi_examples={
             else:
                 data[res.vin] = {'periods': [{'dfrom': res.dfrom, 'dto': res.dto, "gov_plate": res.full_number}]}
             cars_data = data[res.vin]
+            car_data['vin'] = res.vin
             cars_data['brand'] = res.brand
             cars_data['model'] = res.model
 
-
+    data = list(data.keys())
     return data
 
 
